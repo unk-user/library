@@ -1,0 +1,66 @@
+:root {
+
+}
+
+html{ 
+    height: 100%;
+    width: 100%;
+}
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+header {
+    height: 100px;
+    background-color: beige;
+}
+header h1 {
+    margin: 0;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: calc(100% - 100px);
+    width: clamp(80%, 80%, 100%);
+    margin: auto;
+}
+#newBook {
+    margin: 20px auto;
+    height: 60px;
+    width: 180px;
+}
+#books {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items:start;
+    flex-wrap: wrap;
+
+}
+#modal {
+    border: 0;
+    background-color: transparent;
+}
+.card {
+    width: 320px;
+    height: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    background-color: rgb(219, 219, 83);
+    margin-bottom: 20px;
+}
+.card h2 {
+    font-weight: normal;
+    margin: 0;
+}
+.readBtn {
+    background-color: green;
+}
+.nReadBtn {
+    background-color: beige;
+}
