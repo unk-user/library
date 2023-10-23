@@ -1,4 +1,5 @@
-const myLibrary = [{title: 'Title', author: 'Author', pages: 'Pages', read: false}];
+const item = new Book('title', 'author', '22', false);
+const myLibrary = [item];
 const openModal = document.querySelector('#newBook');
 const modal = document.querySelector('#modal');
 const addBook = document.querySelector('#save');
@@ -18,9 +19,9 @@ function Book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
 }
-let i = myLibrary.length;
+let i = 0;
 function appendBooks() {
-    for(i ; i < myLibrary.length; i++){
+    for(i ; i <= myLibrary.length; i++){
         const book = document.createElement('div');
         book.className = 'card';
         book.setAttribute('id', `${i}`)
@@ -34,7 +35,7 @@ function appendBooks() {
         pages.setAttribute('id', 'pages');
         pages.className = 'info';
         const readBtn = document.createElement('button');
-        readBtn.setAttribute('id', 'read');
+        readBtn.className = `${i}`;
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'remove';
         removeBtn.setAttribute('id', 'remove');
@@ -44,10 +45,12 @@ function appendBooks() {
         author.textContent = myLibrary[i].author;
         pages.textContent = myLibrary[i].pages;
         if(myLibrary[i].read){
-            readBtn.className = 'readBtn';
+            readBtn.setAttribute('id', 'readBtn');
+            readBtn.textContent = '';
             readBtn.textContent = 'Read';
         } else {
-            readBtn.className = 'nReadBtn';
+            readBtn.setAttribute('id', 'nReadBtn');
+            readBtn.textContent = '';
             readBtn.textContent = 'Not Read';
         }
         
@@ -68,10 +71,12 @@ openModal.addEventListener('click', () => {
 newRead.addEventListener('click', () => {
     if(read){
         read = false;
-        newRead.className = 'nReadBtn';
+        newRead.setAttribute('id', 'nReadBtn');
+        newRead.textContent = 'Read';
     } else {
         read = true;
-        newRead.className = 'readBtn';
+        newRead.setAttribute('id', 'readBtn');
+        newRead.textContent = 'not Read'
     }
     return read;
 })
@@ -90,14 +95,18 @@ addBook.addEventListener('click', () => {
 })
 
 books.addEventListener('click', (event) => {
-    if(event.target.id === 'read'){
+    if(event.target.id === 'readBtn' || event.target.id === 'nReadBtn'){
       const readBtn = event.target;
-      if (readBtn.className === 'readBtn') {
-        readBtn.className = 'nReadBtn';
+      if (readBtn.id === 'readBtn') {
+        readBtn.setAttribute('id', 'nReadBtn');
+        readBtn.textContent = 'Not Read';
       } else {
-        readBtn.className = 'readBtn';
+        readBtn.setAttribute('id', 'readBtn');
+        readBtn.textContent = 'Read';
       }
     }
 })
 
-document.onload = appendBooks();
+window.onload = function() {
+    appendBooks();
+};
