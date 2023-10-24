@@ -1,10 +1,15 @@
 :root {
-
+  --primary: #907ed3;
+  --secondary: #beadfa;
+  --tertiary: #DFCCFB;
+  --quaternary: #FFF8C9;
+  --primarylow: #907ed38e;
 }
 
 html{ 
     height: 100%;
     width: 100%;
+    background-color: var(--quaternary);
 }
 body {
     height: 100%;
@@ -13,10 +18,17 @@ body {
 }
 header {
     height: 100px;
-    background-color: beige;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20%;
+    font-family: RobotoBold;
+    box-shadow: 0 3px 10px 2px gray;
 }
 header h1 {
     margin: 0;
+    font-size: 2.5rem;
 }
 main {
     display: flex;
@@ -25,11 +37,40 @@ main {
     height: calc(100% - 100px);
     width: clamp(80%, 80%, 100%);
     margin: auto;
+    font-family: RobotoBold;
+}
+#login {
+    width: 150px;
+    height: 50px;
+    font-family: RobotoBold;
+    font-size: 2rem;
+    color: var(--quaternary);
+    border: 0;
+    background-color: transparent;
+}
+#login:hover {
+    cursor: pointer;
+    border: 0;
+}
+#login:focus {
+    border: 0;
 }
 #newBook {
-    margin: 20px auto;
+    margin: 20px 0 20px 10%;
     height: 60px;
     width: 180px;
+    align-self: flex-start;
+    background-color: transparent;
+    border: 0;
+    font-family: RobotoBold;
+    font-size: 1.5rem;
+}
+#newBook:hover {
+    border: 0;
+    cursor: pointer;
+}
+#newBook:focus {
+    border: 0;
 }
 #books {
     width: 100%;
@@ -43,6 +84,50 @@ main {
     border: 0;
     background-color: transparent;
 }
+#readBtn {
+    background-color: #CBFFA9;
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+}
+#nReadBtn {
+    background-color: #F6FDC3;
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    cursor: pointer;
+}
+#remove {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #FF8080;
+    cursor: pointer;
+}
+#save {
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #A0E9FF;
+    cursor: pointer;
+
+}
+#title {
+    font-size: 36px;
+}
+#author {
+    font-size: 24px;
+    font-family: Roboto;
+}
+#pages {
+    font-size: 24px;
+    font-family: Roboto;
+}
 .card {
     width: 320px;
     height: 290px;
@@ -51,16 +136,39 @@ main {
     justify-content: space-evenly;
     align-items: center;
     border-radius: 10px;
-    background-color: rgb(219, 219, 83);
+    background-color: var(--secondary);
     margin-bottom: 20px;
+    box-shadow: 2px 2px 5px 2px gray;
 }
 .card h2 {
     font-weight: normal;
     margin: 0;
 }
-#readBtn {
-    background-color: green;
+#modalCard{
+    background-color: var(--primarylow);
+    backdrop-filter: blur(2px);
 }
-#nReadBtn {
-    background-color: rgb(240, 240, 132);
+.dialogInput {
+    width: 200px;
+    height: 20px;
+    background-color: #907ed38e;
+    border: 1px solid #907ed38e;
+    color: Black;
+    font-size: 1.2rem;
 }
+.dialogInput:active {
+    border: 1px solid #907ed38e;
+}
+.dialogInput:hover {
+    border: 1px solid #907ed38e;
+}
+
+@font-face {
+    font-family: RobotoBold;
+    src: url(res/Roboto-Bold.ttf);
+}
+@font-face {
+    font-family: Roboto;
+    src: url(res/Roboto-Medium.ttf);
+}
+

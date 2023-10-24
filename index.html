@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>Library</h1>
-        <button id="login">Log in</button>
+        <a href="https://github.com/unk-user"><button id="login">Log in</button></a>
     </header>
     <main>
         <button id="newBook">+ New Book</button>
@@ -26,9 +26,9 @@
                     </label>
                     <label for="newpages">
                         <h2 class="info">Pages</h2>
-                        <input type="number" id="newpages" class="dialogInput">
+                        <input type="number" id="newpages" class="dialogInput" min="1" max="10000">
                     </label>
-                    <button class="cardBtn" id="newread">Read</button>
+                    <button class="newread" id="readBtn">Read</button>
                     <button id="save" class="cardBtn">Save</button>
                 </div>
             </dialog>

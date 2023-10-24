@@ -1,16 +1,16 @@
-const item = new Book('title', 'author', '22', false);
-const myLibrary = [item];
+const myLibrary = [];
 const openModal = document.querySelector('#newBook');
 const modal = document.querySelector('#modal');
 const addBook = document.querySelector('#save');
 const newTitle = document.querySelector('#newtitle');
 const newAuthor = document.querySelector('#newauthor');
 const newPages = document.querySelector('#newpages');
-const newRead = document.querySelector('#newread'); 
+const newRead = document.querySelector('.newread'); 
 const dialogInput = document.querySelectorAll('.dialogInput');
 const books = document.querySelector('#books');
+let removeBtns = [];
 
-let read = false;
+let read = true;
 
 
 function Book(title, author, pages, read) {
@@ -23,8 +23,8 @@ let i = 0;
 function appendBooks() {
     for(i ; i <= myLibrary.length; i++){
         const book = document.createElement('div');
-        book.className = 'card';
-        book.setAttribute('id', `${i}`)
+        book.className = `card${i} card`;
+        book.setAttribute('id', `card`)
         const title = document.createElement('h2');
         title.setAttribute('id', 'title');
         title.className = 'info';
@@ -39,11 +39,11 @@ function appendBooks() {
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'remove';
         removeBtn.setAttribute('id', 'remove');
-        removeBtn.className = 'cardBtn';
+        removeBtn.className = `${i}`;
 
         title.textContent = myLibrary[i].title;
-        author.textContent = myLibrary[i].author;
-        pages.textContent = myLibrary[i].pages;
+        author.textContent = `by ${myLibrary[i].author}`;
+        pages.textContent = `${myLibrary[i].pages} Page`;
         if(myLibrary[i].read){
             readBtn.setAttribute('id', 'readBtn');
             readBtn.textContent = '';
@@ -60,8 +60,10 @@ function appendBooks() {
     book.appendChild(readBtn);
     book.appendChild(removeBtn);
     books.appendChild(book);
+    removeBtns.push(removeBtn);
     }
 }
+
 
 
 openModal.addEventListener('click', () => {
@@ -71,11 +73,11 @@ openModal.addEventListener('click', () => {
 newRead.addEventListener('click', () => {
     if(read){
         read = false;
-        newRead.setAttribute('id', 'nReadBtn');
+        newRead.setAttribute('id', 'readBtn');
         newRead.textContent = 'Read';
     } else {
         read = true;
-        newRead.setAttribute('id', 'readBtn');
+        newRead.setAttribute('id', 'nReadBtn');
         newRead.textContent = 'not Read'
     }
     return read;
@@ -97,6 +99,7 @@ addBook.addEventListener('click', () => {
 books.addEventListener('click', (event) => {
     if(event.target.id === 'readBtn' || event.target.id === 'nReadBtn'){
       const readBtn = event.target;
+      let index = Number(readBtn.className);
       if (readBtn.id === 'readBtn') {
         readBtn.setAttribute('id', 'nReadBtn');
         readBtn.textContent = 'Not Read';
@@ -104,8 +107,26 @@ books.addEventListener('click', (event) => {
         readBtn.setAttribute('id', 'readBtn');
         readBtn.textContent = 'Read';
       }
+      if(myLibrary[index].read){
+        myLibrary[index].read = false;
+      } else {
+        myLibrary[index].read = true;
+      }
     }
+});
+
+books.addEventListener('click', (event) => {
+    if(event.target.id === 'remove'){
+        const remove = event.target;
+        let index = remove.className;
+        let card = document.querySelector(`.card${index}`);
+        myLibrary.splice(index, 1);
+        card.remove();
+    }
+
 })
+
+
 
 window.onload = function() {
     appendBooks();
