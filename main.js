@@ -9,9 +9,7 @@ const newRead = document.querySelector('.newread');
 const dialogInput = document.querySelectorAll('.dialogInput');
 const books = document.querySelector('#books');
 let removeBtns = [];
-
 let read = true;
-
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -19,12 +17,12 @@ function Book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
 }
-let i = 0;
+let bookNum = 0;
 function appendBooks() {
-    for(i ; i <= myLibrary.length; i++){
+    for(bookNum ; bookNum <= myLibrary.length; bookNum++){
         const book = document.createElement('div');
-        book.className = `card${i} card`;
-        book.setAttribute('id', `card`)
+        book.className = `card${bookNum} card`;
+        book.setAttribute('id', `card`);
         const title = document.createElement('h2');
         title.setAttribute('id', 'title');
         title.className = 'info';
@@ -35,16 +33,16 @@ function appendBooks() {
         pages.setAttribute('id', 'pages');
         pages.className = 'info';
         const readBtn = document.createElement('button');
-        readBtn.className = `${i}`;
+        readBtn.className = `${bookNum}`;
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'remove';
         removeBtn.setAttribute('id', 'remove');
-        removeBtn.className = `${i}`;
+        removeBtn.className = `${bookNum}`;
 
-        title.textContent = myLibrary[i].title;
-        author.textContent = `by ${myLibrary[i].author}`;
-        pages.textContent = `${myLibrary[i].pages} Page`;
-        if(myLibrary[i].read){
+        title.textContent = myLibrary[bookNum].title;
+        author.textContent = `by ${myLibrary[bookNum].author}`;
+        pages.textContent = `${myLibrary[bookNum].pages} Page`;
+        if(myLibrary[bookNum].read){
             readBtn.setAttribute('id', 'readBtn');
             readBtn.textContent = '';
             readBtn.textContent = 'Read';
@@ -122,6 +120,7 @@ books.addEventListener('click', (event) => {
         let card = document.querySelector(`.card${index}`);
         myLibrary.splice(index, 1);
         card.remove();
+        bookNum--;
     }
 
 })
