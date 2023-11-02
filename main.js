@@ -1,48 +1,106 @@
-const myLibrary = [];
+class Book {
+    constructor(
+        title = 'unknown',
+        author = 'unknown',
+        pages = '0',
+        read = false
+        ){
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+            this.read = read;
+        }
+}
+class Library {
+    constructor(){
+        this.books = [];
+    }
+    addBook(newBook) {
+        if(!this.inLibrary(newBook)){
+            this.books.push(newBook);
+        }
+    }
+    removeBook(index) {
+        this.books = this.books.filter((book) => this.books.indexOf(book) !== index);
+    }
+    getBook(index){
+        return this.books[index];
+    }
+    inLibrary(newBook){
+        return this.books.some((book) => book.title === newBook.title);
+    }
+    get length() {
+        return this.books.length;
+    }
+}
+const myLibrary = new Library();
+let book1 = new Book('unknown', 'unknown', '0', true);
+myLibrary.addBook(book1);
+
+
+//UI 
 const openModal = document.querySelector('#newBook');
 const modal = document.querySelector('#modal');
-const addBook = document.querySelector('#save');
+openModal.addEventListener(('click'), () => {
+    modal.showModal();
+})
 const newTitle = document.querySelector('#newtitle');
 const newAuthor = document.querySelector('#newauthor');
 const newPages = document.querySelector('#newpages');
-const newRead = document.querySelector('.newread'); 
-const dialogInput = document.querySelectorAll('.dialogInput');
-const books = document.querySelector('#books');
-let removeBtns = [];
+const newRead = document.querySelector('.newread');
+const dialogInput = document.querySelectorAll('.dialoginput');
+const saveNewBook = document.querySelector('#save');
 let read = true;
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-}
-let bookNum = 0;
-function appendBooks() {
-    for(bookNum ; bookNum <= myLibrary.length; bookNum++){
+save.addEventListener(('click'), () => {
+    if(!Array.from(dialogInput).some(input => input.value === '')){
+        const newBook = new Book(newTitle.value, newAuthor.value, newPages.value, read);
+        myLibrary.addBook(newBook);
+        modal.close();
+        newTitle.value = '';
+        newAuthor.value = '';
+        newPages.value = '';
+        read = true;
+        appendBook(myLibrary.length - 1);
+    }
+});
+newRead.addEventListener('click', () => {
+    if(!read){
+        read = true;
+        newRead.setAttribute('id', 'readBtn');
+        newRead.textContent = 'Read';
+    } else {
+        read = false;
+        newRead.setAttribute('id', 'nReadBtn');
+        newRead.textContent = 'not Read'
+    }
+    return read;
+})
+const books = document.querySelector('#books');
+let removeBtns = [];
+const appendBook = (index) =>{
         const book = document.createElement('div');
-        book.className = `card${bookNum} card`;
-        book.setAttribute('id', `card`);
         const title = document.createElement('h2');
-        title.setAttribute('id', 'title');
-        title.className = 'info';
         const author = document.createElement('h2');
-        author.setAttribute('id', 'author');
-        author.className = 'info';
         const pages = document.createElement('h2');
-        pages.setAttribute('id', 'pages');
-        pages.className = 'info';
         const readBtn = document.createElement('button');
-        readBtn.className = `${bookNum}`;
         const removeBtn = document.createElement('button');
+        book.className = `card${index} card`;
+        pages.className = 'info';
+        readBtn.className = `${index}`;
+        author.className = 'info';
+        title.className = 'info';
+        removeBtn.className = `${index}`;
         removeBtn.textContent = 'remove';
+        book.setAttribute('id', `card`);
+        title.setAttribute('id', 'title');
+        author.setAttribute('id', 'author');
+        pages.setAttribute('id', 'pages');
         removeBtn.setAttribute('id', 'remove');
-        removeBtn.className = `${bookNum}`;
-
-        title.textContent = myLibrary[bookNum].title;
-        author.textContent = `by ${myLibrary[bookNum].author}`;
-        pages.textContent = `${myLibrary[bookNum].pages} Page`;
-        if(myLibrary[bookNum].read){
+        title.textContent = myLibrary.getBook(index).title;
+        author.textContent = `by ${myLibrary.getBook(index).author}`;
+        pages.textContent = `${myLibrary.getBook(index).pages} Page`;
+        if(myLibrary.getBook(index).read){
             readBtn.setAttribute('id', 'readBtn');
             readBtn.textContent = '';
             readBtn.textContent = 'Read';
@@ -52,48 +110,14 @@ function appendBooks() {
             readBtn.textContent = 'Not Read';
         }
         
-    book.appendChild(title);
-    book.appendChild(author);
-    book.appendChild(pages);
-    book.appendChild(readBtn);
-    book.appendChild(removeBtn);
-    books.appendChild(book);
-    removeBtns.push(removeBtn);
-    }
-}
-
-
-
-openModal.addEventListener('click', () => {
-    modal.showModal();
-})
-
-newRead.addEventListener('click', () => {
-    if(read){
-        read = false;
-        newRead.setAttribute('id', 'readBtn');
-        newRead.textContent = 'Read';
-    } else {
-        read = true;
-        newRead.setAttribute('id', 'nReadBtn');
-        newRead.textContent = 'not Read'
-    }
-    return read;
-})
-
-addBook.addEventListener('click', () => {
-    if(!Array.from(dialogInput).some(input => input.value === "")){
-        const newBook = new Book(newTitle.value, newAuthor.value, newPages.value, read);
-        myLibrary.push(newBook);
-        modal.close();
-        newTitle.value = '';
-        newAuthor.value = '';
-        newPages.value = '';
-        read = false;
-        appendBooks();
-    }
-})
-
+        book.appendChild(title);
+        book.appendChild(author);
+        book.appendChild(pages);
+        book.appendChild(readBtn);
+        book.appendChild(removeBtn);
+        books.appendChild(book);
+        removeBtns.push(removeBtn);    
+} 
 books.addEventListener('click', (event) => {
     if(event.target.id === 'readBtn' || event.target.id === 'nReadBtn'){
       const readBtn = event.target;
@@ -105,28 +129,26 @@ books.addEventListener('click', (event) => {
         readBtn.setAttribute('id', 'readBtn');
         readBtn.textContent = 'Read';
       }
-      if(myLibrary[index].read){
-        myLibrary[index].read = false;
+      if(myLibrary.getBook(index).read){
+        myLibrary.getBook(index).read = false;
       } else {
-        myLibrary[index].read = true;
+        myLibrary.getBook(index).read = true;
       }
     }
 });
-
 books.addEventListener('click', (event) => {
     if(event.target.id === 'remove'){
         const remove = event.target;
         let index = remove.className;
         let card = document.querySelector(`.card${index}`);
-        myLibrary.splice(index, 1);
+        myLibrary.removeBook(Number(index));
         card.remove();
-        bookNum--;
     }
 
 })
 
-
-
-window.onload = function() {
-    appendBooks();
+window.onload = function(){
+    for(let i = 0; i < myLibrary.length; i++){
+        appendBook(i);
+    }
 };
