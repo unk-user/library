@@ -15,22 +15,22 @@
         <button id="newBook">+ New Book</button>
         <div id="books" class="books">
             <dialog id="modal">
-                <div class="card" id="modalCard">
+                <form class="card" id="modalCard">
                     <label for="newtitle">
                         <h2 class="info">Title</h2>
-                        <input type="name" id="newtitle" class="dialogInput">
                     </label>
+                    <input type="name" id="newtitle" class="dialogInput" maxlength="40" minlength="1" required>
                     <label for="newauthor">
                         <h2 class="info">Author</h2>
-                        <input type="name" id="newauthor" class="dialogInput">
                     </label>
+                    <input type="name" id="newauthor" class="dialogInput" maxlength="40">
                     <label for="newpages">
                         <h2 class="info">Pages</h2>
-                        <input type="number" id="newpages" class="dialogInput" min="1" max="10000">
                     </label>
-                    <button class="newread" id="readBtn">Read</button>
-                    <button id="save" class="cardBtn">Save</button>
-                </div>
+                    <input type="number" id="newpages" class="dialogInput" min="1" max="10000">
+                    <button type="button" class="newread" id="readBtn" onclick="pinRead()">Read</button>
+                    <button id="save" class="cardBtn" onclick="submitBook()">Save</button>
+                </form>
             </dialog>
         </div>
     </main>

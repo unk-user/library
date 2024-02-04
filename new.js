@@ -52,19 +52,18 @@ const dialogInput = document.querySelectorAll('.dialoginput');
 const saveNewBook = document.querySelector('#save');
 let read = true;
 
-save.addEventListener(('click'), () => {
-    if(!Array.from(dialogInput).some(input => input.value === '')){
-        const newBook = new Book(newTitle.value, newAuthor.value, newPages.value, read);
-        myLibrary.addBook(newBook);
-        modal.close();
-        newTitle.value = '';
-        newAuthor.value = '';
-        newPages.value = '';
-        read = true;
-        appendBook(myLibrary.length - 1);
-    }
-});
-newRead.addEventListener('click', () => {
+submitBook = () => {
+    if(!validateForm()) return;
+    const newBook = new Book(newTitle.value, newAuthor.value, newPages.value, read);
+    myLibrary.addBook(newBook);
+    modal.close();
+    newTitle.value = '';
+    newAuthor.value = '';
+    newPages.value = '';
+    read = true;
+    appendBook(myLibrary.length - 1);
+}
+pinRead = () => {
     if(!read){
         read = true;
         newRead.setAttribute('id', 'readBtn');
@@ -75,7 +74,14 @@ newRead.addEventListener('click', () => {
         newRead.textContent = 'not Read'
     }
     return read;
-})
+}
+validateForm = () => {
+    const form = document.querySelector('#modalCard');
+    return form.checkValidity();
+}
+newTitle.setCustomValidity('Please enter the title of the book');
+
+
 const books = document.querySelector('#books');
 let removeBtns = [];
 const appendBook = (index) =>{
